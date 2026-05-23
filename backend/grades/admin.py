@@ -1,0 +1,12 @@
+from django.contrib import admin
+from .models import Grade
+
+
+@admin.register(Grade)
+class GradeAdmin(admin.ModelAdmin):
+    list_display = ('student', 'subject', 'value', 'date', 'created_at')
+    list_filter = ('subject', 'value', 'date')
+    search_fields = ('student__user__full_name', 'subject__name')
+    raw_id_fields = ('student', 'subject')
+    ordering = ('-date',)
+    date_hierarchy = 'date'
