@@ -1,11 +1,23 @@
 from django.contrib import admin
+from django.http import JsonResponse
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenRefreshView
 from accounts.views import CustomTokenObtainPairView, RegisterView, MeView, UserListView, UserDetailView
 from groups.views import GroupListCreateView
 from subjects.views import SubjectListCreateView
 
+
+def api_status(request):
+    return JsonResponse({
+        'status': 'ok',
+        'service': 'platformforteachers-backend',
+        'api_base': '/api/',
+    })
+
+
 urlpatterns = [
+    path('', api_status, name='api_status'),
+    path('health/', api_status, name='health'),
     path('admin/', admin.site.urls),
 
     # Auth endpoints
